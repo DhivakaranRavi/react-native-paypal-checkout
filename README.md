@@ -28,10 +28,6 @@ project(':react-native-paypal-checkout').projectDir = new File(rootProject.proje
 
 If using RN 0.60+, edit android/src/.../MainActivity.java
 
-````java
-// ...
-Then edit android/src/.../MainActivity.java
-
 ```java
 // ...
 import com.dk.rn.paypal.PayPalPackage;
