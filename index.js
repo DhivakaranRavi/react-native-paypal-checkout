@@ -1,5 +1,20 @@
-import { NativeModules } from "react-native";
+("use strict");
 
-const { Paypal } = NativeModules;
+var { PayPalModule } = require("react-native").NativeModules;
 
-export default Paypal;
+var constants = {};
+var constantNames = Object.keys(PayPalModule).filter(p => p == p.toUpperCase());
+constantNames.forEach(c => (constants[c] = PayPalModule[c]));
+
+var functions = {
+  paymentRequest(payPalParameters) {
+    return new Promise(function(resolve, reject) {
+      PayPalModule.paymentRequest(payPalParameters, resolve, reject);
+    });
+  }
+};
+
+var exported = {};
+Object.assign(exported, constants, functions);
+
+module.exports = exported;

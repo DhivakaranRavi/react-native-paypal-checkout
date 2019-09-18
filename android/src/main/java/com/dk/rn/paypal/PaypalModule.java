@@ -1,13 +1,13 @@
-package com.paypal;
+package com.dk.rn.paypal;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent; 
+import android.content.Intent;
 
+import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
-import com.facebook.react.bridge.Callback;
 import com.facebook.react.bridge.ReadableMap;
 
 import com.paypal.android.sdk.payments.PayPalAuthorization;
@@ -21,31 +21,25 @@ import java.util.Map;
 import java.util.HashMap;
 import java.math.BigDecimal;
 
+public class PayPalModule extends ReactContextBaseJavaModule {
+  private final int paymentIntentRequestCode;
 
-public class PaypalModule extends ReactContextBaseJavaModule {
+  private static final String ERROR_USER_CANCELLED = "USER_CANCELLED";
+  private static final String ERROR_INVALID_CONFIG = "INVALID_CONFIG";
 
-    private final int paymentIntentRequestCode;
+  private Callback successCallback;
+  private Callback errorCallback;
 
-    private static final String ERROR_USER_CANCELLED = "USER_CANCELLED";
-    private static final String ERROR_INVALID_CONFIG = "INVALID_CONFIG";
+  public PayPalModule(ReactApplicationContext reactContext) {
+    super(reactContext);
+    this.paymentIntentRequestCode = 619;
+  }
 
-    private Callback successCallback;
-    private Callback errorCallback;
+  @Override
+  public String getName() {
+    return "PayPalModule";
+  }
 
-    private final ReactApplicationContext reactContext;
-
-    public PaypalCheckoutModule(ReactApplicationContext reactContext) {
-        super(reactContext);
-        this.reactContext = reactContext;
-        this.paymentIntentRequestCode = 619;
-    }
-
-    @Override
-    public String getName() {
-        return "Paypal";
-    }
-
-  
   @Override public Map<String, Object> getConstants() {
     final Map<String, Object> constants = new HashMap<>();
 

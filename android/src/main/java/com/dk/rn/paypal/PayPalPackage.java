@@ -1,26 +1,27 @@
-package com.paypal;
+package com.dk.rn.paypal;
 
 import android.content.Intent;
 import android.content.Context;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 import com.facebook.react.ReactPackage;
+import com.facebook.react.bridge.JavaScriptModule;
 import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
-import com.facebook.react.bridge.JavaScriptModule;
 
-public class PaypalPackage implements ReactPackage {
- 
-private PayPal paypalModule;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
- @Override
- public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
+public class PayPalPackage implements ReactPackage {
+
+  private PayPalModule paypalModule;
+
+  @Override
+  public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
     List<NativeModule> modules = new ArrayList<>();
     paypalModule = new PayPal(reactContext);
+
     modules.add(paypalModule);
     return modules;
   }
@@ -36,6 +37,6 @@ private PayPal paypalModule;
   }
 
   public void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
-    PaypalModule.handleActivityResult(requestCode, resultCode, data);
+    paypalModule.handleActivityResult(requestCode, resultCode, data);
   }
 }
