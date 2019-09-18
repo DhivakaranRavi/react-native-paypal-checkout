@@ -22,17 +22,19 @@ import java.util.HashMap;
 import java.math.BigDecimal;
 
 public class PayPalModule extends ReactContextBaseJavaModule {
-  private final int paymentIntentRequestCode;
 
+  private final int paymentIntentRequestCode = 619;
   private static final String ERROR_USER_CANCELLED = "USER_CANCELLED";
   private static final String ERROR_INVALID_CONFIG = "INVALID_CONFIG";
 
   private Callback successCallback;
   private Callback errorCallback;
+  
+  ReactApplicationContext reactContext;
 
   public PayPalModule(ReactApplicationContext reactContext) {
     super(reactContext);
-    this.paymentIntentRequestCode = 619;
+    this.reactContext = reactContext;
   }
 
   @Override
@@ -66,7 +68,7 @@ public class PayPalModule extends ReactContextBaseJavaModule {
     final String price = payPalParameters.getString("price");
     final String currency = payPalParameters.getString("currency");
     final String description = payPalParameters.getString("description");
-
+    
     PayPalConfiguration config =
       new PayPalConfiguration().environment(environment).clientId(clientId);
 
@@ -91,7 +93,7 @@ public class PayPalModule extends ReactContextBaseJavaModule {
   }
 
   public void handleActivityResult(final int requestCode, final int resultCode, final Intent data) {
-    if (requestCode != paymentIntentRequestCode) { return; }
+    if (requestCode != paymentIntentRequestCode) { getCurrentActivity(); }
 
     if (resultCode == Activity.RESULT_OK) {
       PaymentConfirmation confirm =

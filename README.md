@@ -26,27 +26,6 @@ include ':react-native-paypal-checkout'
 project(':react-native-paypal-checkout').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-paypal-checkout/android')
 ```
 
-If using RN 0.60+, edit android/src/.../MainActivity.java
-
-```java
-// ...
-import com.dk.rn.paypal.PayPalPackage;
-import android.content.Intent;
-
-public class MainActivity extends ReactActivity {
-    public PayPalPackage payPalPackage;
-    // ...
-
-    @Override
-    public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-       super.onActivityResult(requestCode, resultCode, data);
-       if (requestCode == 619) {
-           payPalPackage.handleActivityResult(requestCode, resultCode, data);
-       }
-    }
-}
-````
-
 4. Usage example:
 
 ```javascript
