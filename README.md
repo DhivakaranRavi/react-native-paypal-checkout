@@ -26,7 +26,7 @@ include ':react-native-paypal-checkout'
 project(':react-native-paypal-checkout').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-paypal-checkout/android')
 ```
 
-If using RN 0.60+, edit android/src/.../MainApplication.java
+If using RN 0.60+, edit android/src/.../MainActivity.java
 
 ````java
 // ...
