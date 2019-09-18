@@ -7,9 +7,9 @@ var constantNames = Object.keys(PayPalModule).filter(p => p == p.toUpperCase());
 constantNames.forEach(c => (constants[c] = PayPalModule[c]));
 
 var functions = {
-  paymentRequest(payPalParameters) {
+  createPayment(payPalParameters) {
     return new Promise(function(resolve, reject) {
-      PayPalModule.paymentRequest(payPalParameters, resolve, reject);
+      PayPalModule.createPayment(payPalParameters, resolve, reject);
     });
   }
 };
