@@ -4,7 +4,7 @@ A React Native interface for the PayPal Payment UI
 
 # Setup
 
-1. Add react-navive-paypal to your project
+1. Add react-navive-paypal-checkout to your project
 
 ```bash
 npm install --save react-native-paypal-checkout
@@ -28,57 +28,34 @@ project(':react-native-paypal-checkout').projectDir = new File(rootProject.proje
 
 If using RN 0.60+, edit android/src/.../MainApplication.java
 
-```java
+````java
 // ...
-import com.paypal.PaypalPackage; // <--
-
-public class MainApplication extends Application implements ReactApplication {
-    // ...
-    private PayPalPackage payPalPackage; // <--
-
-    private final ReactNativeHost reactNativeHost = new ReactNativeHost(this) {
-
-            // ...
-       @Override
-       protected List<ReactPackage> getPackages() {
-            @SuppressWarnings("UnnecessaryLocalVariable")
-            List<ReactPackage> packages = new PackageList(this).getPackages();
-            packages.add(new PayPalPackage());
-            return packages;
-           }
-
-        };
-    }
-
-    // ...
-}
-```
-
 Then edit android/src/.../MainActivity.java
 
 ```java
 // ...
-import android.content.Intent; // <--
+import com.dk.rn.paypal.PayPalPackage;
+import android.content.Intent;
 
 public class MainActivity extends ReactActivity {
-
+    public PayPalPackage payPalPackage;
     // ...
 
     @Override
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
        super.onActivityResult(requestCode, resultCode, data);
-       if (requestCode == 619) { // <--
-           ((MainApplication) getApplication()).payPalPackage.handleActivityResult(requestCode, resultCode, data); // <--
+       if (requestCode == 619) {
+           payPalPackage.handleActivityResult(requestCode, resultCode, data);
        }
     }
 }
-```
+````
 
 4. Usage example:
 
 ```javascript
-var PayPal = require('react-native-paypal');
-PayPal.paymentRequest({
+var PayPal = require('react-native-paypal-checkout');
+PayPal.createPayment({
   clientId: 'AbyfNDFV53djg6w4yYgiug_JaDfBSUiYI7o6NM9HE1CQ_qk9XxbUX0nwcPXXQHaNAWYtDfphQtWB3q4R',
   environment: PayPal.SANDBOX,
   price: '42.00',
@@ -127,7 +104,7 @@ the following arguments as JSON strings:
 Handling callbacks:
 
 ```javascript
-PayPal.paymentRequest(...).then(function (payment, confirm) {
+PayPal.createPayment(...).then(function (payment, confirm) {
   sendPaymentToConfirmInServer(payment, confirm);
 })
 ```
@@ -141,7 +118,7 @@ one of:
 Handling failures:
 
 ```javascript
-PayPal.paymentRequest(...).catch(function (error_code) {
+PayPal.createPayment(...).catch(function (error_code) {
     if (error_code == PayPal.USER_CANCELLED) {
         // User didn't complete the payment
     } else if (error_code == PayPal.INVALID_CONFIG) {
